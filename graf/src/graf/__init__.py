@@ -4,14 +4,15 @@ import pkg_resources
 pkg_resources.declare_namespace(__name__)
 version = pkg_resources.require('graf')[0].version
 
+__all__ = ['version', 'use', 'call']
 
 def use(environment=None):
     """
     Use graf commands in the shell
 
     Args:
-        environment: expand all graf commands into this environment,
-            if this is not specified, globals() of caller will be used
+        environment: None or a dictionary instance which indicate the variables.
+            if this is not specified, globals() of caller will be used.
     """
     from graf.plugins import registry
     if not environment:
@@ -27,6 +28,8 @@ def call(filename, environment=None):
 
     Args:
         filename: a filename of graf script file
+        environment: None or a dictionary instance which indicate the variables.
+            if this is not specified, globals() of caller will be used.
     """
     from graf.plugins import registry
 
