@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 """
+Console program of graf
 
 (C) 2013 hashnote.net, Alisue
 """
@@ -10,8 +11,10 @@ __date__    = '2013-10-08'
 
 
 def main(args=None):
+    """
+    Execute graf console program
+    """
     from argparse import ArgumentParser
-    from graf.plugins import registry
 
     parser = ArgumentParser()
     parser.add_argument('-i', '--interactive', default=False,
@@ -21,16 +24,10 @@ def main(args=None):
     # parse argument
     args = parser.parse_args(args)
 
-    # create global variables
-    local = globals().copy()
-    #local.update(locals())
-    local.update(registry.raw)
-
     # call all script files
+    import graf
     for script_file in args.script_files:
-        local['__file__'] = script_file
-        local['__name__'] = '__main__'
-        execfile(script_file, local)
+        graf.call(script_file)
 
     # enable interactive shell if no script_files was specified
     if len(args.script_files) == 0:
