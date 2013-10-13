@@ -14,6 +14,7 @@ def main(args=None):
     """
     Execute graf console program
     """
+    import graf
     from argparse import ArgumentParser
 
     parser = ArgumentParser()
@@ -25,7 +26,6 @@ def main(args=None):
     args = parser.parse_args(args)
 
     # call all script files
-    import graf
     for script_file in args.script_files:
         graf.call(script_file)
 
@@ -40,6 +40,10 @@ def main(args=None):
         except ImportError:
             pass
         import code
+        # create global variables
+        local = globals().copy()
+        # extend graf commands in local
+        graf.use(local)
         code.interact(local=local)
 
 if __name__ == '__main__':

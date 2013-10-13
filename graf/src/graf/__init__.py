@@ -31,6 +31,8 @@ def call(filename, environment=None):
         environment: None or a dictionary instance which indicate the variables.
             if this is not specified, globals() of caller will be used.
     """
+    import os
+    import sys
     from graf.plugins import registry
 
     if not environment:
@@ -45,4 +47,15 @@ def call(filename, environment=None):
 
     # call script file
     local['__file__'] = filename
+    local['__name__'] = '__main__'
+    local['__package__'] = None
+
+    # Opne file and read content
+    with open(filename, 'r') as f: content = f.read()
+    # Add directory of filename into PYTHONPATH
+    python_path_stored = sys.path
+    sys.path = [os.path.dirname(filename)] + sys.path
+    # execute
     execfile(filename, local)
+    # Remove directory from PYTHONPATH
+    sys.path = python_path_stored
