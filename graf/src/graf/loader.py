@@ -7,6 +7,7 @@ A data loader module
 """
 __author__ = 'Alisue (lambdalisue@hashnote.net)'
 __version__ = '0.1.0'
+import os
 import warnings
 import itertools
 import numpy as np
@@ -103,7 +104,8 @@ class BaseLoader(object):
         return slice_columns(data, using)
 
     def glob(self, pathname, using=None,
-             unite=False, basecolumn=0, parser=None, **kwargs):
+             unite=False, basecolumn=0, parser=None, 
+             with_filename=False, **kwargs):
         """
         Load data from file matched with given glob pattern.
 
@@ -121,19 +123,32 @@ class BaseLoader(object):
                 among the dataset (Default: 0). It only affect when `unite` is
                 true
             parser: an instance or registered name of parser class
+            with_filename: if it is true, returning dataset will contain
+                filename in the first column. it is cannot be used with
+                `unite = True`
             **kwargs: optional arguments
 
         Returns:
             A list of numpy array or A nested list of numpy array
         """
+        # argument check
+        if unite and with_filename:
+            raise AttributeError(
+                    "`with_filename` attribute cannot be set True when "
+                    "`unite` attribute was set True.")
+        # make sure that the pathname is absolute
+        pathname = os.path.abspath(pathname)
         # create dataset
         dataset =[]
         for filename in natsorted(glob(pathname)):
-            dataset.append(self.load(
+            data = self.load(
                 filename=filename,
                 using=using,
                 parser=parser,
-                **kwargs))
+                **kwargs)
+            if with_filename:
+                data = [filename] + data
+            dataset.append(data)
         # sort naturally
         if len(dataset) == 0 and not kwargs.get('quiet', False):
             warnings.warn("Nothing found with glob pattern '%s'" % pathname)
