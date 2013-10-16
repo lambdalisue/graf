@@ -31,6 +31,7 @@ def relative(dataset, ori=0, column=1):
     # convert
     for data in dataset:
         data[column] /= oridiff / 100.0
+    return dataset
 
 def __plugin__(registry):
     registry.register('filters.rel', relative)

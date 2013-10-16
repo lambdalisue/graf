@@ -55,11 +55,7 @@ def default_config():
             'parser': 'parsers.PlainParser',
             'linestyles': ['-', '--', '-.'],
             'markerstyles': ['.', 'o', 'x', '*'],
-            'colors': [
-                '#D7000F', '#E48E00', '#F3E100', '#86B81B',
-                '#009140', '#00958D', '#0097DB', '#0062AC',
-                '#1B1C80', '#8A017C', '#D60077', '#D7004A'
-            ],
+            'colors': None,
         }
     }
     return conf

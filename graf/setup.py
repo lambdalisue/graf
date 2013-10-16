@@ -38,7 +38,7 @@ development.
 (C) 2013 hashnote.net, Alisue
 """
 name = 'graf'
-version = '0.1.1'
+version = '0.1.2'
 author = 'Alisue'
 author_email = 'lambdalisue@hashnote.net'
 

@@ -17,11 +17,13 @@ _pyplot_commands = [
     'title', 'suptitle', 'grid',
     'xlabel', 'xticks', 'xlim', 'twinx',
     'ylabel', 'yticks', 'ylim', 'twiny',
+    'tick_params', 'axes',
     'show', 'savefig',
+    'text', 'box',
 ]
 """matplotlib.pyplot PLOT commands which will be treated as command"""
 _pyplot_plot_commands = [
-    'plot', 'errorbar', 'bar',
+    'plot', 'errorbar', 'bar', 'axhline', 'axvline',
 ]
 
 

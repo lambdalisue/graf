@@ -24,7 +24,9 @@ class ColorCycle(CycleIterator):
         return mpl.rcParams['axes.color_cycle']
     @_colors.setter
     def _colors(self, value):
-        mpl.rcParams['axes.color_cycle'] = value
+        if value is not None:
+            mpl.rcParams['axes.color_cycle'] = value
+            self.reset()
 
     @property
     def iterable(self):
